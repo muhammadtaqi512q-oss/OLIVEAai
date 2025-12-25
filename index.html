@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Olivea AI</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="styles.css" />
+
+</head>
+
+<body class="flex justify-center p-6">
+  <div class="max-w-3xl w-full">
+
+    <h1 class="text-4xl font-extrabold text-center text-white mb-6">
+      Olivea AI
+    </h1>
+    <p class="text-center text-gray-300 mb-6">
+      Owned & Created by <span class="text-blue-400 font-semibold">Muhammad Taqi</span><br />
+      Text • Ultra HD Image • Voice — All in One
+    </p>
+
+    <textarea
+      id="prompt"
+      rows="4"
+      class="w-full p-4 rounded-xl bg-gray-900 text-white border border-gray-700"
+      placeholder="Ask Olivea AI anything..."
+    ></textarea>
+
+    <div class="flex gap-3 mt-4">
+      <button id="chatBtn" class="flex-1 bg-blue-600 text-white py-3 rounded-xl">💬 Chat</button>
+      <button id="imgBtn" class="flex-1 bg-purple-600 text-white py-3 rounded-xl">🖼 Ultra HD Image</button>
+      <button id="micBtn" class="bg-gray-700 text-white px-4 rounded-xl">🎤</button>
+    </div>
+
+    <div id="loading" class="hidden mt-6 text-center text-gray-300">
+      Processing...
+    </div>
+
+    <div id="output" class="mt-8"></div>
+
+  </div>
+<script type="module" src="script.js"></script>
+
+<script
+  defer
+  src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
+  integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
+  data-cf-beacon='{"version":"2024.11.0","token":"e3c1c9af36de41759418005494a48906","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
+  crossorigin="anonymous"
+></script>
+</body>
+</html>
