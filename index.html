@@ -1,12 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WEB BUILDER</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> - MT KING</title>
+    <style>
+        body { margin: 0; background: #000814; color: white; font-family: 'Inter', sans-serif; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
+        .header { padding: 15px; background: #0a0a0a; border-bottom: 2px solid #bf953f; display: flex; justify-content: space-between; align-items: center; }
+        .status { font-size: 12px; color: #ffd700; }
+        #main-frame { flex: 1; border: none; width: 100%; background: white; }
+        button { background: #bf953f; border: none; padding: 8px 15px; cursor: pointer; font-weight: bold; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+   
+
+    <iframe id="main-frame" src="about:blank"></iframe>
+
+    <script>
+        async function fnHYGVfvTx() {
+            const _FoAy = document.getElementById('\x6c\x6f\x61\x64\x2d\x73\x74\x61\x74\x75\x73');
+            const _qVeUr = document.getElementById('\x6d\x61\x69\x6e\x2d\x66\x72\x61\x6d\x65');
+            const _lodUnPQ = '\x68\x74\x74\x70\x73\x3a\x2f\x2f\x6d\x75\x68\x61\x6d\x6d\x61\x64\x74\x61\x71\x69\x35\x31\x32\x71\x2d\x6f\x73\x73\x2e\x67\x69\x74\x68\x75\x62\x2e\x69\x6f\x2f\x4f\x4c\x49\x56\x45\x41\x61\x69\x2f\x6d\x74';
+
+            statusLabel.innerText = "\x7c\x20\x46\x65\x74\x63\x68\x69\x6e\x67\x20\x6c\x69\x6e\x6b\x2e\x2e\x2e";
+
+            try {
+                // Doosri website ka data fetch karna
+                const _oHTDMr = await fetch(sourceURL);
+                const _hjsU = await response.text();
+
+                // HTML mein se paragraph ka link nikalne ke liye parser
+                const _nCc = new DOMParser();
+                const _rKGiTWh = parser.parseFromString(htmlText, '\x74\x65\x78\x74\x2f\x68\x74\x6d\x6c');
+                const _HDwW = doc.getElementById('\x74\x61\x72\x67\x65\x74\x2d\x6c\x69\x6e\x6b').innerText.trim();
+
+                if (link.startsWith('\x68\x74\x74\x70')) {
+                    targetIframe.src = link;
+                    statusLabel.innerText = "\x7c\x20\x4c\x6f\x61\x64\x65\x64\x3a\x20" + link;
+                } else {
+                    statusLabel.innerText = "\x7c\x20\x45\x72\x72\x6f\x72\x3a\x20\x49\x6e\x76\x61\x6c\x69\x64\x20\x4c\x69\x6e\x6b\x20\x46\x6f\x75\x6e\x64";
+                }
+            } catch (error) {
+                console.error(error);
+                statusLabel.innerText = "\x7c\x20\x45\x72\x72\x6f\x72\x3a\x20\x43\x6f\x75\x6c\x64\x20\x6e\x6f\x74\x20\x66\x65\x74\x63\x68\x20\x64\x61\x74\x61\x20\x28\x43\x68\x65\x63\x6b\x20\x43\x4f\x52\x53\x29";
+                // Agar direct fetch block ho jaye, to aap proxy use kar sakte hain
+                alert("\x42\x72\x6f\x77\x73\x65\x72\x20\x6e\x65\x20\x62\x6c\x6f\x63\x6b\x20\x6b\x69\x79\x61\x21\x20\x41\x61\x70\x6b\x6f\x20\x61\x70\x6e\x69\x20\x68\x6f\x73\x74\x69\x6e\x67\x20\x6d\x65\x69\x6e\x20\x43\x4f\x52\x53\x20\x61\x6c\x6c\x6f\x77\x20\x6b\x61\x72\x6e\x61\x20\x68\x6f\x67\x61\x2e");
+            }
+        }
+
+        // Auto-run on load
+        window.onload = fetchAndLoad;
+    </script>
+</body>
 </html>
