@@ -3,78 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MT KING - AI Loader</title>
+    <title>MT KING - Secure Loader</title>
     <style>
-        body { 
-            margin: 0; 
-            background: #000814; 
-            color: white; 
-            font-family: 'Inter', sans-serif; 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column; 
-            height: 100vh; 
-        }
-        .header { 
-            padding: 12px 20px; 
-            background: #0a0a0a; 
-            border-bottom: 2px solid #bf953f; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            font-size: 14px;
-        }
-        #load-status { color: #ffd700; font-weight: 500; }
+        body { margin: 0; background: #000814; font-family: 'Inter', sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        .header { padding: 12px; background: #0a0a0a; border-bottom: 2px solid #bf953f; color: #ffd700; text-align: center; font-size: 13px; letter-spacing: 1px; }
         #main-frame { flex: 1; border: none; width: 100%; background: white; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div>M SELLER | <span id="load-status">Connecting to GitHub...</span></div>
-    </div>
+    
 
     <iframe id="main-frame" src="about:blank"></iframe>
 
     <script>
-        async function initializeSystem() {
-            const statusLabel = document.getElementById('load-status');
-            const targetIframe = document.getElementById('main-frame');
+        async function fetchAndDecode() {
+            const statusBox = document.getElementById('status');
+            const frame = document.getElementById('main-frame');
             
-            // Aapka naya GitHub link
+            // Aapka GitHub link jahan .mt wala ghalat link para hai
             const sourceURL = 'https://muhammadtaqi512q-oss.github.io/OLIVEAai/mt';
 
             try {
-                // 1. GitHub se page fetch karna
                 const response = await fetch(sourceURL);
-                if (!response.ok) throw new Error('Network response was not ok');
-                
-                const htmlText = await response.text();
+                const html = await response.text();
 
-                // 2. DOM Parser se link nikalna
                 const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlText, 'text/html');
+                const doc = parser.parseFromString(html, 'text/html');
                 
-                // Hum <p> tag mein se text uthayenge
-                const pTag = doc.querySelector('p');
-                const finalLink = pTag ? pTag.innerText.trim() : null;
+                // 1. Source se ghalat link uthana (.mt wala)
+                let encodedLink = doc.getElementById('target-link').innerText.trim();
 
-                // 3. Iframe update karna
-                if (finalLink && finalLink.startsWith('http')) {
-                    targetIframe.src = finalLink;
-                    statusLabel.innerText = "System Active";
-                    console.log("Loaded successfully: " + finalLink);
+                // 2. REVERSE REPLACE: .mt ko wapas .site mein badalna
+                let decodedLink = encodedLink.replace('.mt', '.site');
+
+                // 3. Theek link ko frame mein load karna
+                if (decodedLink.includes('http')) {
+                    frame.src = decodedLink;
+                    statusBox.innerText = "System Secure & Active";
+                    console.log("Decoded Successfully");
                 } else {
-                    statusLabel.innerText = "Error: Link not found in source";
+                    statusBox.innerText = "Fetch Error";
                 }
+
             } catch (error) {
-                console.error("Fetch error:", error);
-                statusLabel.innerText = "Connection Failed";
+                statusBox.innerText = "Connection Failed";
+                console.error("Security Fetch Error:", error);
             }
         }
 
-        // Auto-start
-        window.onload = initializeSystem;
+        window.onload = fetchAndDecode;
     </script>
 </body>
 </html>
