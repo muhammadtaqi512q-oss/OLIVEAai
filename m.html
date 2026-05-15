@@ -7,7 +7,7 @@
     <style>
         body {
             background: #000;
-            color: #111; /* Text ko taqreeban gayab kar diya taake nazar na aaye */
+            color: #111;
             font-family: sans-serif;
             display: flex;
             justify-content: center;
@@ -22,20 +22,12 @@
         }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
 
-    <!-- Ye link ghalat (.mt) hai aur display none hai taake user ko nazar na aaye -->
-    <p id="target-link" style="display: none;"></p>
+    <p id="target-link">https://019e0224-4e5b-7c7b-bee9-04b07ced619e.arena.mt/?embed=true</p>
 
     <script>
-        // --- 1. LINK PROTECTION ---
-        // Link ko yahan fragments mein tora hai taake 'View Source' mein pura link na mil sake
-        const part1 = "https://019dde21-2be3-743a-9b29-30d6969a1bdb";
-        const part2 = ".arena";
-        const part3 = ".mt/"; // Fake extension
-
-        document.getElementById('target-link').innerText = part1 + part2 + part3;
-
+       
         // --- 2. SECURITY BLOCKADE (F12, Ctrl+U, etc.) ---
         
         document.onkeydown = function(e) {
@@ -52,7 +44,7 @@
         // Right click block
         document.addEventListener('contextmenu', e => e.preventDefault());
 
-        // Anti-Console Loop (Console khulne par page crash kar dega)
+        
         setInterval(function() {
             const before = new Date().getTime();
             debugger;
