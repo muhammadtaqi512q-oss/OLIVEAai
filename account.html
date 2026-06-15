@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MASTERS Ecosystem</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,7 +13,6 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
-
         body {
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
             min-height: 100vh;
@@ -22,7 +22,6 @@
             padding: 20px;
             overflow-x: hidden;
         }
-
         .dashboard-container {
             width: 100%;
             max-width: 1100px;
@@ -35,7 +34,6 @@
             box-shadow: 0 20px 40px rgba(255, 75, 145, 0.15);
             position: relative;
         }
-
         h1 {
             color: #d11a5b;
             text-align: center;
@@ -46,7 +44,6 @@
             letter-spacing: 2px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-
         /* Grid System for Masters Cards */
         .masters-grid {
             display: grid;
@@ -54,7 +51,6 @@
             gap: 20px;
             margin-bottom: 20px;
         }
-
         .master-card {
             background: rgba(255, 255, 255, 0.7);
             border-radius: 16px;
@@ -63,13 +59,11 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 16px rgba(0,0,0,0.02);
         }
-
         .master-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 24px rgba(255, 75, 145, 0.2);
             background: rgba(255, 255, 255, 0.9);
         }
-
         .master-card h3 {
             color: #2b2b2b;
             font-size: 1.1rem;
@@ -79,23 +73,34 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .balance-tag {
             color: #d11a5b;
             font-weight: 700;
             font-size: 1.2rem;
             margin-bottom: 6px;
         }
-
-        .pass-tag {
-            font-size: 0.85rem;
-            color: #666;
+        /* Password container aur toggle button ki styling */
+        .pass-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background: rgba(255, 75, 145, 0.1);
             padding: 4px 8px;
             border-radius: 6px;
-            display: inline-block;
         }
-
+        .pass-tag {
+            font-size: 0.85rem;
+            color: #666;
+            font-family: monospace;
+        }
+        .toggle-password {
+            background: none;
+            border: none;
+            color: #d11a5b;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding-left: 5px;
+        }
         /* Floating M Floating Action Button */
         .m-button {
             position: fixed;
@@ -117,12 +122,10 @@
             transition: all 0.3s ease;
             z-index: 100;
         }
-
         .m-button:hover {
             transform: scale(1.1) rotate(10deg);
             box-shadow: 0 15px 30px rgba(255, 75, 145, 0.6);
         }
-
         /* Modal / Popups Styling */
         .modal-overlay {
             position: fixed;
@@ -140,12 +143,10 @@
             transition: all 0.3s ease;
             z-index: 1000;
         }
-
         .modal-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
-
         .modal-box {
             background: white;
             padding: 35px;
@@ -157,21 +158,17 @@
             transition: all 0.3s ease;
             position: relative;
         }
-
         .modal-overlay.active .modal-box {
             transform: scale(1);
         }
-
         .modal-box h2 {
             color: #2b2b2b;
             margin-bottom: 20px;
             font-size: 1.5rem;
         }
-
         .form-group {
             margin-bottom: 15px;
         }
-
         .form-group label {
             display: block;
             margin-bottom: 6px;
@@ -179,7 +176,6 @@
             color: #555;
             font-weight: 600;
         }
-
         .form-group input {
             width: 100%;
             padding: 12px;
@@ -189,17 +185,14 @@
             font-size: 1rem;
             transition: border-color 0.3s;
         }
-
         .form-group input:focus {
             border-color: #ff4b91;
         }
-
         .btn-panel {
             display: flex;
             gap: 10px;
             margin-top: 20px;
         }
-
         .btn {
             flex: 1;
             padding: 12px;
@@ -210,25 +203,20 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-
         .btn-primary {
             background: #ff4b91;
             color: white;
         }
-
         .btn-primary:hover {
             background: #e03a7a;
         }
-
         .btn-secondary {
             background: #f0f0f0;
             color: #555;
         }
-
         .btn-secondary:hover {
             background: #e5e5e5;
         }
-
         .forgot-link {
             display: inline-block;
             margin-top: 12px;
@@ -237,11 +225,9 @@
             text-decoration: none;
             cursor: pointer;
         }
-
         .forgot-link:hover {
             text-decoration: underline;
         }
-
         /* Status & Errors */
         .error-msg {
             color: #d11a5b;
@@ -249,7 +235,6 @@
             margin-top: 5px;
             display: none;
         }
-
         .user-info-panel {
             background: rgba(255, 75, 145, 0.05);
             padding: 15px;
@@ -260,7 +245,6 @@
     </style>
 </head>
 <body>
-
     <div class="dashboard-container">
         <h1>Masters System Ecosystem</h1>
         <div class="masters-grid" id="mastersGrid"></div>
@@ -317,30 +301,49 @@
         let currentLocalData = [];
         let activeSessionUser = null;
 
-        // Page Load hone par source se data fetch karna
         window.addEventListener('DOMContentLoaded', async () => {
             currentLocalData = await fetchMastersData();
             renderDashboard();
         });
 
-        // Dashboard dynamic screen rendering
+        // Dashboard dynamic screen rendering (Updated for Show/Hide Password)
         function renderDashboard() {
             const grid = document.getElementById('mastersGrid');
             grid.innerHTML = '';
-            
-            currentLocalData.forEach(master => {
+                        
+            currentLocalData.forEach((master, index) => {
                 const card = document.createElement('div');
                 card.className = 'master-card';
                 card.innerHTML = `
                     <h3>${master.name}</h3>
                     <div class="balance-tag">Rs. ${master.balance.toLocaleString()}</div>
-                    <div class="pass-tag">P: ${master.password}</div>
+                    <div class="pass-container">
+                        <span class="pass-tag" id="pass-${index}">P: ••••••••</span>
+                        <button class="toggle-password" onclick="togglePasswordDisplay(${index}, '${master.password}')">
+                            <i class="fas fa-eye" id="icon-${index}"></i>
+                        </button>
+                    </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // Modal triggers
+        // Password Show/Hide karne ka function
+        function togglePasswordDisplay(index, realPassword) {
+            const passSpan = document.getElementById(`pass-${index}`);
+            const icon = document.getElementById(`icon-${index}`);
+            
+            if (passSpan.innerText === "P: ••••••••") {
+                passSpan.innerText = `P: ${realPassword}`;
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passSpan.innerText = "P: ••••••••";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
         function openAuthModal() {
             document.getElementById('authName').value = '';
             document.getElementById('authPassword').value = '';
@@ -353,83 +356,71 @@
         }
 
         function triggerForgotPassword() {
-            alert("Security Protocol Info: Please refer directly to the dashboard display panel cards. All user keys/passwords are explicitly listed transparently on each Master's block card.");
+            alert("Security Protocol Info: Click the eye icon on your respective Master card on the dashboard to reveal your password.");
         }
 
-        // Verification Handling
         function handleAuthSubmit() {
             const nameInput = document.getElementById('authName').value.trim().toUpperCase();
             const passInput = document.getElementById('authPassword').value;
             const errorDiv = document.getElementById('authError');
 
-            // Find matching master matching name and password
             const matchedUser = currentLocalData.find(u => u.name.toUpperCase() === nameInput && u.password === passInput);
 
             if (matchedUser) {
                 activeSessionUser = matchedUser;
                 errorDiv.style.display = 'none';
                 closeModal('authModal');
-                
-                // Open Transfer Operations Engine
                 openTransactionPanel();
             } else {
                 errorDiv.style.display = 'block';
             }
         }
 
-        // Main operation layout loading
         function openTransactionPanel() {
             document.getElementById('sessionName').innerText = activeSessionUser.name;
             document.getElementById('sessionBalance').innerText = activeSessionUser.balance.toLocaleString();
             document.getElementById('transferAmount').value = '';
             document.getElementById('recipientName').value = '';
-            
-            // reset errors
+                        
             document.getElementById('amountError').style.display = 'none';
             document.getElementById('recipientError').style.display = 'none';
-            
+                        
             document.getElementById('transactionModal').classList.add('active');
         }
 
-        // Business Logic for funds validation and routing
         function executeTransfer() {
             const amountInput = parseFloat(document.getElementById('transferAmount').value);
             const targetInput = document.getElementById('recipientName').value.trim().toUpperCase();
-            
+                        
             const amountError = document.getElementById('amountError');
             const recipientError = document.getElementById('recipientError');
 
             amountError.style.display = 'none';
             recipientError.style.display = 'none';
 
-            // 1. Balance Error Rule Check
             if (isNaN(amountInput) || amountInput <= 0 || amountInput > activeSessionUser.balance) {
                 amountError.innerText = `Error: Insufficient balance! Your current limit is ${activeSessionUser.balance.toLocaleString()} PKR.`;
                 amountError.style.display = 'block';
                 return;
             }
 
-            // 2. Target Recipient Check
             const targetAccount = currentLocalData.find(u => u.name.toUpperCase() === targetInput);
             if (!targetAccount) {
                 recipientError.style.display = 'block';
                 return;
             }
 
-            // Self sending block
             if (targetAccount.id === activeSessionUser.id) {
                 recipientError.innerText = "Cannot route transactions to your own balance root!";
                 recipientError.style.display = 'block';
                 return;
             }
 
-            // 3. Execution Phase (Deduct from source, add to dynamic array target reference)
             activeSessionUser.balance -= amountInput;
             targetAccount.balance += amountInput;
 
-            // Interface re-render updates
             renderDashboard();
-            
+                        
             alert(`Transaction Successful!\nSuccessfully routed Rs. ${amountInput.toLocaleString()} to ${targetAccount.name}.`);
             closeModal('transactionModal');
         }
