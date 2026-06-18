@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nexura API Generator</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #0a0a0a; color: #d4af37; padding: 20px; }
+        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #d4af37; border-radius: 10px; background: #1a1a1a; }
+        input { width: 100%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #d4af37; color: white; }
+        button { width: 100%; padding: 10px; background: #d4af37; border: none; cursor: pointer; font-weight: bold; }
+        #apiResult { margin-top: 20px; word-break: break-all; border-top: 1px solid #d4af37; padding-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Nexura API Generator</h2>
+    <input type="text" id="userName" placeholder="Enter Full Name">
+    <input type="number" id="userAge" placeholder="Enter Age">
+    <button onclick="generateAPI()">Generate API Key</button>
+    
+    <div id="apiResult"></div>
+</div>
+
+<script>
+    function generateAPI() {
+        const name = document.getElementById('userName').value.replace(/\s+/g, '');
+        const age = document.getElementById('userAge').value;
+        
+        if (name && age) {
+            // API Key Logic: Username + Age
+            const apiKey = name + age;
+            document.getElementById('apiResult').innerHTML = 
+                "<strong>Your API Key:</strong><br>" + apiKey + 
+                "<br><button onclick='copyToClipboard(\"" + apiKey + "\")'>Copy API Key</button>";
+        } else {
+            alert("Please enter both Name and Age!");
+        }
+    }
+
+    // --- COPY FUNCTION ---
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text);
+        alert("API Key copied: " + text);
+    }
+</script>
+
+</body>
+</html>
