@@ -17,6 +17,8 @@
     <h2>Nexura API Generator</h2>
     <input type="text" id="userName" placeholder="Enter Full Name">
     <input type="number" id="userAge" placeholder="Enter Age">
+    <input type="number" id="luckyNumber" placeholder="Enter Lucky Number">
+    
     <button onclick="generateAPI()">Generate API Key</button>
     
     <div id="apiResult"></div>
@@ -26,19 +28,18 @@
     function generateAPI() {
         const name = document.getElementById('userName').value.replace(/\s+/g, '');
         const age = document.getElementById('userAge').value;
+        const luckyNumber = document.getElementById('luckyNumber').value;
         
-        if (name && age) {
-            // API Key Logic: Username + Age
-            const apiKey = name + age;
-            document.getElementById('apiResult').innerHTML = 
-                "<strong>Your API Key:</strong><br>" + apiKey + 
+        if (name && age && luckyNumber) {
+            const apiKey = name + age + '&' + luckyNumber;
+            document.getElementById('apiResult').innerHTML =
+                "<strong>Your API Key:</strong><br>" + apiKey +
                 "<br><button onclick='copyToClipboard(\"" + apiKey + "\")'>Copy API Key</button>";
         } else {
-            alert("Please enter both Name and Age!");
+            alert("Please enter Name, Age, and Lucky Number!");
         }
     }
 
-    // --- COPY FUNCTION ---
     function copyToClipboard(text) {
         navigator.clipboard.writeText(text);
         alert("API Key copied: " + text);
