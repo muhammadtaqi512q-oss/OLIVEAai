@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DuckDuckGo Connected AI</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        body { background-color: #0f172a; color: #e2e8f0; }
+    </style>
+</head>
+<body class="flex flex-col h-screen max-w-2xl mx-auto p-4">
+
+    <header class="border-b border-slate-800 pb-4 mb-4 text-center">
+        <h1 class="text-2xl font-bold text-orange-400">DuckDuckGo AI Engine</h1>
+        <p class="text-xs text-slate-400 mt-1">Free Unlimited Chat • Powered by Llama 3</p>
+    </header>
+
+    <div id="chat-box" class="flex-1 overflow-y-auto space-y-4 pr-2 mb-4 scrollbar-thin">
+        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-sm">
+            <span class="font-bold text-orange-400 block mb-1">AI:</span>
+            Hello! Main DuckDuckGo server ke through Llama 3 use kar raha hoon. Poochein apna sawal!
+        </div>
+    </div>
+
+    <div class="flex gap-2 border-t border-slate-800 pt-4">
+        <input type="text" id="user-input" placeholder="Type your message here..." 
+            class="flex-1 bg-slate-900 border border-slate-800 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-orange-500">
+        <button id="send-btn" onclick="askDuckAI()" 
+            class="bg-orange-600 hover:bg-orange-500 text-white font-medium px-4 py-2 rounded-lg text-sm transition-all">
+            Send
+        </button>
+    </div>
+
+    <script>
+        async function askDuckAI() {
+            const userInput = document.getElementById('user-input');
+            const chatBox = document.getElementById('chat-box');
+            const text = userInput.value.trim();
+            
+            if (!text) return;
+
+            // Display User Message
+            appendMessage('User', text, 'text-slate-100');
+            userInput.value = '';
+
+            // Display Loading State
+            const aiMessageId = appendMessage('AI', 'Typing...', 'text-orange-400');
+
+            try {
+                // 1. Sabse pehle DuckDuckGo se ek temporary status/v机构 token chahiye hoti hai
+                const proxyUrl = "https://corsproxy.io/?";
+                const tokenUrl = encodeURIComponent("https://duckduckgo.com/duckchat/v1/status");
+                
+                const statusRes = await fetch(`${proxyUrl}${tokenUrl}`, {
+                    headers: { "x-vqd-accept": "1" }
+                });
+                
+                const vqdToken = statusRes.headers.get("x-vqd-token");
+
+                if (!vqdToken) {
+                    throw new Error("Token generation failed");
+                }
+
+                // 2. Ab token ka use karke actual chat request bhejenge
+                const chatApiUrl = encodeURIComponent("https://duckduckgo.com/duckchat/v1/chat");
+                const payload = {
+                    model: "meta-llama/Meta-Llama-3-70b-Instruct-Turbo", // Aap Llama 3 70B use kar rahe hain!
+                    messages: [{ role: "user", content: text }]
+                };
+
+                const chatRes = await fetch(`${proxyUrl}${chatApiUrl}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-vqd-token": vqdToken
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const rawData = await chatRes.text();
+                
+                // DuckDuckGo stream data bhejta hai, hume text nikalna hoga
+                const lines = rawData.split('\n');
+                let fullReply = "";
+                
+                for (let line of lines) {
+                    if (line.startsWith('data: ')) {
+                        const jsonStr = line.replace('data: ', '').trim();
+                        if (jsonStr === '[DONE]') break;
+                        try {
+                            const parsed = JSON.parse(jsonStr);
+                            if (parsed.message) fullReply += parsed.message;
+                        } catch (e) { }
+                    }
+                }
+
+                document.getElementById(aiMessageId).innerHTML = `<span class="font-bold text-orange-400 block mb-1">AI:</span>${fullReply || "No response received."}`;
+
+            } catch (error) {
+                document.getElementById(aiMessageId).innerText = "System busy hai ya connection block hua hai. Please 2 seconds baad try karein.";
+                console.error(error);
+            }
+        }
+
+        function appendMessage(sender, text, textColor) {
+            const chatBox = document.getElementById('chat-box');
+            const id = 'msg-' + Date.now();
+            const msgHtml = `<div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-sm ${textColor}" id="${id}">
+                <span class="font-bold block mb-1">${sender}:</span>${text}
+            </div>`;
+            chatBox.insertAdjacentHTML('beforeend', msgHtml);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return id;
+        }
+
+        // Enter key support
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') askDuckAI();
+        });
+    </script>
+</body>
+</html>
